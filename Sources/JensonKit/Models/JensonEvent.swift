@@ -42,6 +42,13 @@ public struct JensonEvent: Codable {
 
     /// The question being asked, if provided.
     public let question: JensonQuestion?
+
+    public init(type: EventType, who: String, what: String, question: JensonQuestion?) {
+        self.type = type
+        self.who = who
+        self.what = what
+        self.question = question
+    }
 }
 
 /// A struct that represents a question event.
@@ -51,6 +58,11 @@ public struct JensonQuestion: Codable {
 
     /// The list of choices the player can make.
     public let options: [JensonChoice]
+
+    public init(question: String, options: [JensonChoice]) {
+        self.question = question
+        self.options = options
+    }
 }
 
 /// A struct that represents a choice that can be made by the player.
@@ -60,4 +72,9 @@ public struct JensonChoice: Codable {
 
     /// The events that follow this choice.
     public let events: [JensonEvent]
+
+    public init(name: String, events: [JensonEvent]) {
+        self.name = name
+        self.events = events
+    }
 }

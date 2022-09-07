@@ -20,4 +20,9 @@ public struct JensonFile: Codable {
 
     /// The timeline of events that will be played.
     let timeline: [JensonEvent]
+
+    public init(version: Int, timeline: [JensonEvent]) {
+        self.version = version
+        self.timeline = timeline
+    }
 }
