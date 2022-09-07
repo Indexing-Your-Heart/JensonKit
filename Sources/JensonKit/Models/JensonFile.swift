@@ -13,7 +13,11 @@
 
 import Foundation
 
+/// A struct that represents a Jenson file.
 public struct JensonFile: Codable {
+    /// The version of the Jenson file, which dictates what features are available.
     let version: Int
+
+    /// The timeline of events that will be played.
     let timeline: [JensonEvent]
 }

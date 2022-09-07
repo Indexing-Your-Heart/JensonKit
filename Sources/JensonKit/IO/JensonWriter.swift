@@ -12,13 +12,18 @@
 
 import Foundation
 
+/// A class that writes Jenson files.
 public class JensonWriter {
     private let contents: JensonFile
 
+    /// Create a file writer.
+    /// - Parameter jensonFile: The Jenson file struct to write to disk.
     public init(contentsOf jensonFile: JensonFile) {
         self.contents = jensonFile
     }
 
+    /// Writes the Jenson file to the specified path.
+    /// - Parameter path: The path to the file to write to.
     public func write(to path: String) throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted

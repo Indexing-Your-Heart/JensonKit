@@ -12,23 +12,30 @@
 
 import Foundation
 
+/// A class that reads Jenson files and decodes them into events.
 public class JensonReader {
     private let data: Data
 
+    /// An enumeration representing various file reading errors.
     public enum ReaderError: Error {
+        /// The data is malformed.
         case malformedData
+        /// The file couldn't be decoded from Base64.
         case decryptionError
     }
 
+    /// - Parameter data: The data containing the Jenson file's contents.
     public init(_ data: Data) {
         self.data = data
     }
 
+    /// - Parameter path: The path to the file to read.
     public init(fileURLWithPath path: String) throws {
         let url = URL(fileURLWithPath: path)
         self.data = try Data(contentsOf: url)
     }
 
+    /// Decode the file data into a Jenson file struct.
     public func decode() throws -> JensonFile {
         guard let stringContents = String(data: self.data, encoding: .utf8) else {
             throw ReaderError.malformedData
