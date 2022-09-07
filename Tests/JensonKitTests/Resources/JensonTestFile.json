@@ -1,0 +1,120 @@
+{
+  "version" : 1,
+  "timeline" : [
+    {
+      "type" : "comment",
+      "who" : "",
+      "what" : "This is the start of the Jenson file, which contains various elements."
+    },
+    {
+      "type" : "dialogue",
+      "who" : "",
+      "what" : "Freddy shudders as he hears the tape. No, it couldn’t have been… She had been claimed “dead” for several years."
+    },
+    {
+      "type" : "dialogue",
+      "who" : "Witness",
+      "what" : "“… and he scoffed at me.”"
+    },
+    {
+      "type" : "dialogue",
+      "who" : "Witness",
+      "what" : "“Told me that I’d be lucky to experience real life.”"
+    },
+    {
+      "type" : "dialogue",
+      "who" : "Witness",
+      "what" : "“To witness for myself a star at dawn…”"
+    },
+    {
+      "type" : "dialogue",
+      "who" : "",
+      "what" : "He couldn’t bear to listen to the rest of the tape, be he persisted. “In the Hall of the Mountain King” kept playing in the background, the instruments growing louder."
+    },
+    {
+      "type" : "dialogue",
+      "who" : "Witness",
+      "what" : "“… a bubble in a stream…”"
+    },
+    {
+      "type" : "dialogue",
+      "who" : "Gregory",
+      "what" : "“Come on! We only have a few minutes before the gate closes!”"
+    },
+    {
+      "type" : "dialogue",
+      "who" : "",
+      "what" : "Freddy winces."
+    },
+    {
+      "type" : "dialogue",
+      "who" : "Witness",
+      "what" : "“… a flash of lightning in a summer cloud…”"
+    },
+    {
+      "type" : "dialogue",
+      "who" : "",
+      "what" : "A panel flashes on the screen with the dreaded line puzzle. He couldn’t muster the courage to face it."
+    },
+    {
+      "who" : "",
+      "type" : "question",
+      "what" : "",
+      "question" : {
+        "options" : [
+          {
+            "name" : "Solve it",
+            "events" : [
+              {
+                "type" : "dialogue",
+                "who" : "",
+                "what" : "He sighs and starts tracing, his robotic finger quavering."
+              }
+            ]
+          },
+          {
+            "name" : "Leave it be",
+            "events" : [
+              {
+                "type" : "dialogue",
+                "who" : "Freddy",
+                "what" : "“No…”"
+              },
+              {
+                "type" : "dialogue",
+                "who" : "",
+                "what" : "He couldn’t do it. He turns away as the tape continues to play."
+              }
+            ]
+          }
+        ],
+        "question" : "Should he try to solve it?"
+      }
+    },
+    {
+      "type" : "dialogue",
+      "who" : "Witness",
+      "what" : "“… a flickering lamp..”"
+    },
+    {
+      "type" : "dialogue",
+      "who" : "",
+      "what" : "The door unexpectedly closes, and a scream is heard from another room."
+    },
+    {
+      "type" : "dialogue",
+      "who" : "Witness",
+      "what" : "“… a phantom, and a dream…”"
+    },
+    {
+      "type" : "dialogue",
+      "who" : "",
+      "what" : "The tape clicks. It had been done."
+    },
+    {
+      "type" : "comment",
+      "who" : "",
+      "what" : "End of Jenson file."
+    }
+  ]
+}
