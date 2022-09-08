@@ -11,10 +11,14 @@
 //  details.
 
 import Foundation
+import Compression
 
 /// A class that reads Jenson files and decodes them into events.
 public class JensonReader {
     private let data: Data
+
+    /// Whether the reader should interpret the file as being compressed. Defaults to true.
+    var compressed = true
 
     /// An enumeration representing various file reading errors.
     public enum ReaderError: Error {
@@ -40,13 +44,12 @@ public class JensonReader {
         guard let stringContents = String(data: self.data, encoding: .utf8) else {
             throw ReaderError.malformedData
         }
-
-        print(stringContents)
-
-        guard let decodedData = Data(base64Encoded: stringContents, options: .ignoreUnknownCharacters) else {
+        guard var decodedData = Data(base64Encoded: stringContents, options: .ignoreUnknownCharacters) else {
             throw ReaderError.decryptionError
         }
-
+        if compressed {
+            decodedData = try decodedData.decompressed(from: COMPRESSION_BROTLI)
+        }
         let decoder = JSONDecoder()
         return try decoder.decode(JensonFile.self, from: decodedData)
     }

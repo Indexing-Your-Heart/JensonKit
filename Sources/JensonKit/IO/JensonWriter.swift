@@ -11,10 +11,14 @@
 //  details.
 
 import Foundation
+import Compression
 
 /// A class that writes Jenson files.
 public class JensonWriter {
     private let contents: JensonFile
+
+    /// Whether the writer should compress the data before writing to disk. Defaults to true.
+    var compressed = true
 
     /// Create a file writer.
     /// - Parameter jensonFile: The Jenson file struct to write to disk.
@@ -27,8 +31,12 @@ public class JensonWriter {
     public func write(to path: String) throws {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
-        let encodedData = try encoder.encode(contents).base64EncodedString(options: .lineLength64Characters)
+        var encodedData = try encoder.encode(contents)
+        if compressed {
+            encodedData = try encodedData.compressed(using: COMPRESSION_BROTLI)
+        }
+        let encodedString = encodedData.base64EncodedString(options: .lineLength64Characters)
         let filePathURL = URL(fileURLWithPath: path)
-        try encodedData.write(to: filePathURL, atomically: true, encoding: .utf8)
+        try encodedString.write(to: filePathURL, atomically: true, encoding: .utf8)
     }
 }

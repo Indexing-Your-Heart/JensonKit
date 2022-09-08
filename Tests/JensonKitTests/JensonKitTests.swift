@@ -68,6 +68,75 @@ final class JensonKitTests: XCTestCase {
         let readData = try Data(contentsOf: testDataPath)
         let expectedData = try Data(contentsOf: expectedDataPath)
         XCTAssertEqual(readData, expectedData)
+    }
 
+    func testMeasureReadPerformance() throws {
+        guard let path = Bundle.module.path(forResource: "JensonTestFileUncompressed", ofType: "jenson") else {
+            XCTFail("Missing resource file \"JensonTestFile.jenson\"")
+            return
+        }
+        measure {
+            do {
+                let reader = try JensonReader(fileURLWithPath: path)
+                reader.compressed = false
+                _ = try reader.decode()
+            } catch {
+                XCTFail("Decode failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func testMeasureWritePerformance() throws {
+        guard let path = Bundle.module.path(forResource: "JensonTestFile", ofType: "jenson") else {
+            XCTFail("Missing resource file \"JensonTestFile.jenson\"")
+            return
+        }
+        measure {
+            do {
+                let reader = try JensonReader(fileURLWithPath: path)
+                let contents = try reader.decode()
+                let writer = JensonWriter(contentsOf: contents)
+                writer.compressed = false
+                try writer.write(to: "Test.jenson")
+
+            } catch {
+                XCTFail("Write failed failed: \(error.localizedDescription)")
+            }
+
+        }
+    }
+
+    func testMeasureReadPerformanceWithCompression() throws {
+        guard let path = Bundle.module.path(forResource: "JensonTestFile", ofType: "jenson") else {
+            XCTFail("Missing resource file \"JensonTestFile.jenson\"")
+            return
+        }
+        measure {
+            do {
+                let reader = try JensonReader(fileURLWithPath: path)
+                _ = try reader.decode()
+            } catch {
+                XCTFail("Decode failed: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func testMeasureWritePerformanceWithCompression() throws {
+        guard let path = Bundle.module.path(forResource: "JensonTestFile", ofType: "jenson") else {
+            XCTFail("Missing resource file \"JensonTestFile.jenson\"")
+            return
+        }
+        measure {
+            do {
+                let reader = try JensonReader(fileURLWithPath: path)
+                let contents = try reader.decode()
+                let writer = JensonWriter(contentsOf: contents)
+                try writer.write(to: "Test.jenson")
+
+            } catch {
+                XCTFail("Write failed failed: \(error.localizedDescription)")
+            }
+
+        }
     }
 }
