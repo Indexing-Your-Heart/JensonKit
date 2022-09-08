@@ -18,7 +18,7 @@ public class JensonWriter {
     private let contents: JensonFile
 
     /// Whether the writer should compress the data before writing to disk. Defaults to true.
-    var compressed = true
+    public var compressed = true
 
     /// Create a file writer.
     /// - Parameter jensonFile: The Jenson file struct to write to disk.

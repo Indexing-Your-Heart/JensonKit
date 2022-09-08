@@ -18,7 +18,7 @@ public class JensonReader {
     private let data: Data
 
     /// Whether the reader should interpret the file as being compressed. Defaults to true.
-    var compressed = true
+    public var compressed = true
 
     /// An enumeration representing various file reading errors.
     public enum ReaderError: Error {
