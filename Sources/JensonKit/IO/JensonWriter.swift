@@ -39,4 +39,15 @@ public class JensonWriter {
         let filePathURL = URL(fileURLWithPath: path)
         try encodedString.write(to: filePathURL, atomically: true, encoding: .utf8)
     }
+
+    /// Encodes the current file into a data object.
+    public func data() throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        var encodedData = try encoder.encode(contents)
+        if compressed {
+            encodedData = try encodedData.compressed(using: COMPRESSION_BROTLI)
+        }
+        return encodedData
+    }
 }
