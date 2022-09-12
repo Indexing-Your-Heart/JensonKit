@@ -17,7 +17,7 @@ import Foundation
 /// An event may be a comment, dialogue, or question.
 public struct JensonEvent: Codable {
     /// An enumeration representing the various event types.
-    public enum EventType: String, Codable {
+    public enum EventType: String, Codable, CaseIterable {
         /// A no-op event that represents a comment.
         case comment
 
@@ -29,7 +29,15 @@ public struct JensonEvent: Codable {
 
         /// An event that represents a choice to be made.
         case choice
+
+        /// An event that represents a trigger to refresh the contents of the screen.
+        /// This usually indicates an image or audio change.
+        /// - Note: This event type is available to Jenson files with manifest v2 or later.
+        case refresh
     }
+
+    /// The UUID generated for this event.
+    public let id = UUID()
 
     /// The event type.
     public let type: EventType
@@ -43,38 +51,87 @@ public struct JensonEvent: Codable {
     /// The question being asked, if provided.
     public let question: JensonQuestion?
 
-    public init(type: EventType, who: String, what: String, question: JensonQuestion?) {
+    /// A list of refresh events to trigger with this event.
+    /// - Note: This field is available to Jenson files with manifest v2 or later.
+    public let refresh: [JensonRefreshContent]?
+
+    public init(
+        type: EventType,
+        who: String,
+        what: String,
+        question: JensonQuestion? = nil,
+        refresh: [JensonRefreshContent]? = nil
+    ) {
         self.type = type
         self.who = who
         self.what = what
         self.question = question
+        self.refresh = refresh
+    }
+
+    private enum CodingKeys: CodingKey {
+        case type
+        case who
+        case what
+        case question
+        case refresh
     }
 }
 
-/// A struct that represents a question event.
-public struct JensonQuestion: Codable {
-    /// The question that will be asked.
-    public let question: String
+extension JensonEvent: RandomIdentifiedAccessable {
+    public static func == (lhs: JensonEvent, rhs: JensonEvent) -> Bool {
+        lhs.id == rhs.id
+    }
 
-    /// The list of choices the player can make.
-    public let options: [JensonChoice]
-
-    public init(question: String, options: [JensonChoice]) {
-        self.question = question
-        self.options = options
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(type)
+        hasher.combine(what)
     }
 }
 
-/// A struct that represents a choice that can be made by the player.
-public struct JensonChoice: Codable {
-    /// The name of the choice as it appears on-screen.
-    public let name: String
+/// A struct that represents a refresh trigger.
+/// - Note: This struct is available to Jenson files with manifest v2 or later.
+public struct JensonRefreshContent: Codable {
+    /// An enumeration that represents the various refresh types.
+    public enum Kind: String, Codable {
+        /// Refreshes an image on the screen.
+        case image
 
-    /// The events that follow this choice.
-    public let events: [JensonEvent]
+        /// Refreshes the sound effect layer.
+        case soundEffect
 
-    public init(name: String, events: [JensonEvent]) {
-        self.name = name
-        self.events = events
+        /// Refreshes the background music.
+        case music
+
+        /// Refreshes other content.
+        case other
+    }
+
+    /// The UUID generated for this refresh trigger.
+    public let id = UUID()
+
+    /// The type of refresh trigger this event corresponds to.
+    public let kind: Kind
+
+    /// The name of the resource to refresh the content to.
+    public let resourceName: String
+
+    /// The priority level for this refresh trigger.
+    /// This is typically used to denote various layers of content types such as images or music layering.
+    public let priority: Int?
+
+    public init(kind: Kind, resourceName: String, priority: Int? = nil) {
+        self.kind = kind
+        self.resourceName = resourceName
+        self.priority = priority
+    }
+
+    private enum CodingKeys: CodingKey {
+        case kind
+        case resourceName
+        case priority
     }
 }
+
+extension JensonRefreshContent: RandomIdentifiedAccessable {}

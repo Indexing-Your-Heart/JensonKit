@@ -8,7 +8,7 @@ let package = Package(
     platforms: [.iOS(.v15), .macOS(.v12), .macCatalyst(.v15), .tvOS(.v15)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
-        .library(name: "JensonKit", targets: ["JensonKit"]),
+        .library(name: "JensonKit", targets: ["JensonKit"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -19,13 +19,14 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "JensonKit",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "JensonKitTests",
             dependencies: ["JensonKit"],
             resources: [
                 .process("Resources")
             ]
-        ),
+        )
     ]
 )

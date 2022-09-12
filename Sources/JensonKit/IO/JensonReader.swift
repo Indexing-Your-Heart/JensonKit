@@ -10,8 +10,8 @@
 //  Indexing Your Heart comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law. See the CNPL for
 //  details.
 
-import Foundation
 import Compression
+import Foundation
 
 /// A class that reads Jenson files and decodes them into events.
 public class JensonReader {
@@ -36,12 +36,12 @@ public class JensonReader {
     /// - Parameter path: The path to the file to read.
     public init(fileURLWithPath path: String) throws {
         let url = URL(fileURLWithPath: path)
-        self.data = try Data(contentsOf: url)
+        data = try Data(contentsOf: url)
     }
 
     /// Decode the file data into a Jenson file struct.
     public func decode() throws -> JensonFile {
-        guard let stringContents = String(data: self.data, encoding: .utf8) else {
+        guard let stringContents = String(data: data, encoding: .utf8) else {
             throw ReaderError.malformedData
         }
         guard var decodedData = Data(base64Encoded: stringContents, options: .ignoreUnknownCharacters) else {

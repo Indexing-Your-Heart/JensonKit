@@ -10,8 +10,8 @@
 //  Indexing Your Heart comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law. See the CNPL for
 //  details.
 
-import Foundation
 import Compression
+import Foundation
 
 /// A class that writes Jenson files.
 public class JensonWriter {
@@ -23,7 +23,7 @@ public class JensonWriter {
     /// Create a file writer.
     /// - Parameter jensonFile: The Jenson file struct to write to disk.
     public init(contentsOf jensonFile: JensonFile) {
-        self.contents = jensonFile
+        contents = jensonFile
     }
 
     /// Writes the Jenson file to the specified path.

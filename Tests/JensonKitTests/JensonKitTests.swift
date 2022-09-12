@@ -10,8 +10,8 @@
 //  Indexing Your Heart comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law. See the CNPL for
 //  details.
 
-import XCTest
 @testable import JensonKit
+import XCTest
 
 final class JensonKitTests: XCTestCase {
     func testReaderReadsFileContents() throws {
@@ -27,7 +27,7 @@ final class JensonKitTests: XCTestCase {
             XCTFail("Missing resource file \"JensonTestFile.json\"")
             return
         }
-        
+
         let reader = try JensonReader(fileURLWithPath: path)
         XCTAssertThrowsError(try reader.decode())
     }
@@ -49,7 +49,7 @@ final class JensonKitTests: XCTestCase {
             "This is the start of the Jenson file, which contains various elements."
         )
         XCTAssertNotNil(contents.timeline.first { $0.type == .question })
-        XCTAssertEqual(contents.timeline.filter { $0.who == "Witness"}.count, 7)
+        XCTAssertEqual(contents.timeline.filter { $0.who == "Witness" }.count, 7)
     }
 
     func testWriterEncodesSuccessfully() throws {
@@ -67,7 +67,17 @@ final class JensonKitTests: XCTestCase {
         let expectedDataPath = URL(fileURLWithPath: expectedPath)
         let readData = try Data(contentsOf: testDataPath)
         let expectedData = try Data(contentsOf: expectedDataPath)
-        XCTAssertEqual(readData, expectedData)
+
+        let expectedReader = JensonReader(expectedData)
+        let readReader = JensonReader(readData)
+
+        let expectedFile = try expectedReader.decode()
+        let readFile = try readReader.decode()
+
+        XCTAssertEqual(expectedFile.version, readFile.version)
+        XCTAssertEqual(expectedFile.timeline.count, readFile.timeline.count)
+        XCTAssertEqual(expectedFile.story, readFile.story)
+        XCTAssertEqual(expectedFile.application, readFile.application)
     }
 
     func testMeasureReadPerformance() throws {
@@ -102,7 +112,6 @@ final class JensonKitTests: XCTestCase {
             } catch {
                 XCTFail("Write failed failed: \(error.localizedDescription)")
             }
-
         }
     }
 
@@ -136,7 +145,6 @@ final class JensonKitTests: XCTestCase {
             } catch {
                 XCTFail("Write failed failed: \(error.localizedDescription)")
             }
-
         }
     }
 }

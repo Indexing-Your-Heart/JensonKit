@@ -10,7 +10,6 @@
 //  Indexing Your Heart comes with ABSOLUTELY NO WARRANTY, to the extent permitted by applicable law. See the CNPL for
 //  details.
 
-
 import Foundation
 
 /// A struct that represents a Jenson file.
@@ -18,11 +17,26 @@ public struct JensonFile: Codable {
     /// The version of the Jenson file, which dictates what features are available.
     public let version: Int
 
+    /// The application that wrote the file.
+    /// - Note: This field is available to Jenson files with manifest v2 or later.
+    public let application: JensonApp?
+
+    /// The story associated with this Jenson file.
+    /// - Note: This field is available to Jenson files with manifest v2 or later.
+    public let story: JensonStory?
+
     /// The timeline of events that will be played.
     public let timeline: [JensonEvent]
 
-    public init(version: Int, timeline: [JensonEvent]) {
+    public init(
+        version: Int,
+        application: JensonApp? = nil,
+        story: JensonStory? = nil,
+        timeline: [JensonEvent]
+    ) {
         self.version = version
+        self.application = application
+        self.story = story
         self.timeline = timeline
     }
 }
