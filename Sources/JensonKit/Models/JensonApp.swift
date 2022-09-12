@@ -19,10 +19,10 @@ public struct JensonApp: Codable {
     public let id = UUID()
 
     /// The name of the application that authored the file.
-    var name: String
+    public let name: String
 
     /// The URL to the website associated with this application.
-    var website: String?
+    public let website: String?
 
     public init(name: String, website: String? = nil) {
         self.name = name
