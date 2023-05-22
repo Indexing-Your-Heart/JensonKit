@@ -13,5 +13,6 @@
 import Foundation
 
 /// A typealias that indicates an object is able to be identified in a random access collection.
+/// 
 /// This is typically used for objects that will be used in `ForEach` structs in SwiftUI or other equivalents.
 public typealias RandomIdentifiedAccessable = Identifiable & Equatable & Hashable
