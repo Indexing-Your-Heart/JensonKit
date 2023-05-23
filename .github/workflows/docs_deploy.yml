@@ -32,7 +32,7 @@ jobs:
     - name: Generate Docs
       uses: fwcd/swift-docc-action@v1
       with:
-        target: CranberrySprite
+        target: JensonKit
         output: ./public
         transform-for-static-hosting: 'true'
         disable-indexing: 'true'
